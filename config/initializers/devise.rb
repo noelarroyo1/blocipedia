@@ -163,7 +163,7 @@ config.expire_all_remember_me_on_sign_out = true
 
 # ==> Configuration for :validatable
 # Range for password length.
-config.password_length = 6..128
+config.password_length = 0..128
 
 # Email regex used to validate email formats. It simply asserts that
 # one (and only one) @ exists in the given string. This is mainly

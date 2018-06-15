@@ -1,12 +1,6 @@
 require 'random_data'
-
-10.times do
-  Wiki.create!(
-    title: RandomData.random_sentence,
-    body: RandomData.random_paragraph
-  )
-end
-wikis = Wiki.all
+require 'faker'
+include Faker
 
 
  # Create an admin user
@@ -29,6 +23,22 @@ premium_member = User.create!(
   password: 'Blochead2',
   role: 'premium'
 )
+
+# Create standard members
+5.times do
+  standard_members = User.create!(
+    email: Faker::Internet.email,
+    password: Faker::Lorem.word
+  )
+end
+
+20.times do
+  Wiki.create!(
+    title: Faker::Lorem.sentence,
+    body: Faker::Lorem.paragraph(15)
+  )
+end
+wikis = Wiki.all
 
 puts "Seed finished"
 puts "#{Wiki.count} wikis created"

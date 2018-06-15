@@ -38,6 +38,10 @@ gem 'thor', '0.19.1'
 gem 'devise'
 
 gem 'pundit'
+
+# Seed database with fake data 
+gem 'faker'
+
 group :development do
   gem 'listen', '~> 3.0.5'
   gem 'byebug'
