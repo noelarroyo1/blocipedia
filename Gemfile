@@ -37,8 +37,11 @@ gem 'thor', '0.19.1'
 
 gem 'devise'
 
+gem 'pundit'
 group :development do
   gem 'listen', '~> 3.0.5'
+  gem 'byebug'
+  gem 'better_errors'
 end
 
 group :development, :test do

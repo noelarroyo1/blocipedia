@@ -1,6 +1,5 @@
 class WikisController < ApplicationController
-  before_action :require_sign_in
-  before_action :authorize_user, except: [:edit, :new, :index, :show, :update]
+  before_action :authenticate_user!
 
   def index
     @wiki = Wiki.all
@@ -19,8 +18,8 @@ class WikisController < ApplicationController
   end
 
   def destroy
-    @wiki = Wiki.find(params[:id])
-
+    @wiki = Wiki.where(id: params[:id]).first
+    authorize @wiki
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
       redirect_to wikis_path
@@ -28,7 +27,7 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error deleting the wiki."
       render :show
     end
-  end
+ end
 
   def update
     @wiki = Wiki.find(params[:id])
@@ -44,7 +43,7 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.new(wiki_params)
+    @wiki = current_user.wikis.new(wiki_params)
 
     if @wiki.save
       flash[:notice] = "Wiki was saved."
@@ -61,8 +60,17 @@ private
     params.require(:wiki).permit(:title, :body)
   end
 
-  def authorize_user
-    unless current_user.admin?
+  def user
+    user = User.find(params[:id])
+  end
+
+  def authorize_user(wiki)
+    # unless current_user.admin?
+    #   flash[:alert] = "You must be an admin to do that."
+    #   redirect_to wikis_path
+    # end
+
+    if current_user != wiki.user || current_user != admin
       flash[:alert] = "You must be an admin to do that."
       redirect_to wikis_path
     end

@@ -12,7 +12,9 @@
   <body>
     <div class="container">
       <ul class="nav nav-tabs">
-        <li><%= link_to "Blocipedia", root_path %></li>
+        <li>
+          <%= link_to "Blocipedia", user_signed_in? ? wikis_path : root_path %>
+        </li>
         <div class="pull-right user-info">
           <% if user_signed_in? %>
             <strong><%= link_to current_user.email, user_path(current_user), :class => 'navbar-link' %></strong> |
