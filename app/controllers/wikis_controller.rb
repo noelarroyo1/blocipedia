@@ -3,18 +3,22 @@ class WikisController < ApplicationController
 
   def index
     @wiki = Wiki.all
+    authorize @wiki
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def new
     @wiki = Wiki.new
+    authorize @wiki
   end
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def destroy
@@ -27,12 +31,12 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error deleting the wiki."
       render :show
     end
- end
+  end
 
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
-
+    authorize @wiki
     if @wiki.save
       flash[:notice] = "Wiki was updated!"
       redirect_to @wiki
@@ -44,7 +48,7 @@ class WikisController < ApplicationController
 
   def create
     @wiki = current_user.wikis.new(wiki_params)
-
+    authorize @wiki
     if @wiki.save
       flash[:notice] = "Wiki was saved."
       redirect_to @wiki
@@ -64,15 +68,10 @@ private
     user = User.find(params[:id])
   end
 
-  def authorize_user(wiki)
-    # unless current_user.admin?
-    #   flash[:alert] = "You must be an admin to do that."
-    #   redirect_to wikis_path
-    # end
-
-    if current_user != wiki.user || current_user != admin
-      flash[:alert] = "You must be an admin to do that."
-      redirect_to wikis_path
-    end
-  end
+  # def authorize_user(wiki)
+  #   if current_user != wiki.user || current_user != admin
+  #     flash[:alert] = "You must be an admin to do that."
+  #     redirect_to wikis_path
+  #   end
+  # end
 end

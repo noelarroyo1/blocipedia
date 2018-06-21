@@ -38,6 +38,9 @@ gem 'thor', '0.19.1'
 gem 'devise'
 
 gem 'pundit'
+
+gem 'stripe'
+
 group :development do
   gem 'listen', '~> 3.0.5'
   gem 'byebug'

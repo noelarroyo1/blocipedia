@@ -6,7 +6,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    scope.where(id: record.id).exist?
+    scope.where(id: record.id).exists?
   end
 
   def new?
@@ -20,7 +20,7 @@ class WikiPolicy < ApplicationPolicy
   def destroy?
     user.admin? or record.user.id == user.id
   end
-  
+
   def update?
     user.present?
   end
