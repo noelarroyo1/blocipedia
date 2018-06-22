@@ -32,12 +32,19 @@ premium_member = User.create!(
   )
 end
 
-20.times do
-  Wiki.create!(
+users = User.all 
+
+# Creating Wikis
+
+15.times do
+  Wiki.create!([{
+    user: users.sample,
     title: Faker::Lorem.sentence,
-    body: Faker::Lorem.paragraph(15)
-  )
+    body: Faker::Lorem.paragraph,
+    private: false
+    }])
 end
+
 wikis = Wiki.all
 
 puts "Seed finished"
