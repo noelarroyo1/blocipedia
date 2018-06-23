@@ -32,8 +32,11 @@ premium_member = User.create!(
   )
 end
 
+users = User.all
+
 20.times do
   Wiki.create!(
+    user: users.sample,
     title: Faker::Lorem.sentence,
     body: Faker::Lorem.paragraph(15)
   )

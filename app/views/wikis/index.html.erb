@@ -1,6 +1,12 @@
-<h1> Welcome to Blocipedia! </p>
 
-<h2>Wikis</h2>
+<div class="jumbotron">
+  <h1 class="display-4">Checkout the Wikis!</h1>
+  <p class="lead">This is where you can view the wikis that have
+  been created! Take a gander or upgrade your account to Premium to take
+full advantage of what Blocipedia truly offers!</p>
+  <hr class="my-4">
+  <%= link_to "Upgrade", new_charge_path, class: 'btn btn-success btn-lg' %>
+</div>
 
 <% @wiki.each do |wiki| %>
   <div class="media">
