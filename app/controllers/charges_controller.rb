@@ -11,12 +11,17 @@ class ChargesController < ApplicationController
   charge = Stripe::Charge.create(
     customer: customer.id, # Note -- this is NOT the user_id in your app
     amount: 10_00,
-    description: "BigMoney Membership - #{current_user.email}",
+    description: "Premium Membership - #{current_user.email}",
     currency: 'usd'
   )
 
-  flash[:notice] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
-  redirect_to user_path(current_user) # or wherever
+  if current_user.role == "standard"
+    current_user.update_attribute(:role, 'premium')
+    flash[:notice] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
+    redirect_to user_path(current_user) # or wherever
+  else
+    redirect_to user_path(current_user)
+  end
 
   # Stripe will send back CardErrors, with friendly messages
   # when something goes wrong.

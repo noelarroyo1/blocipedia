@@ -15,4 +15,10 @@ class User < ApplicationRecord
 
   enum role: [:standard, :premium, :admin]
 
+  def downgrade
+    if self.role == "premium"
+      self.role = "standard"
+    end
+  end
+
 end
