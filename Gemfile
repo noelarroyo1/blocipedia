@@ -39,8 +39,14 @@ gem 'devise'
 
 gem 'pundit'
 
-# Seed database with fake data 
+# Seed database with fake data
 gem 'faker'
+
+# Use Stripe for payment options
+gem 'stripe'
+
+# Use figaro for environment vars
+gem 'figaro', '1.0'
 
 group :development do
   gem 'listen', '~> 3.0.5'
