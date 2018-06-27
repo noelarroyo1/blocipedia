@@ -32,17 +32,17 @@ premium_member = User.create!(
   )
 end
 
-users = User.all 
+users = User.all
 
 # Creating Wikis
 
 15.times do
-  Wiki.create!([{
+  Wiki.create!(
     user: users.sample,
     title: Faker::Lorem.sentence,
     body: Faker::Lorem.paragraph,
     private: false
-    }])
+    )
 end
 
 wikis = Wiki.all
