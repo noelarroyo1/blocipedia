@@ -34,7 +34,9 @@ end
 
 users = User.all
 
-20.times do
+# Creating Wikis
+
+15.times do
   Wiki.create!(
     user: users.sample,
     title: Faker::Lorem.sentence,
