@@ -14,7 +14,7 @@ class WikisController < ApplicationController
           @wikis = Wiki.where(private: false)
         end
       end
-    end 
+    end
   end
 
   def show
