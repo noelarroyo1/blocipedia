@@ -8,11 +8,11 @@ full advantage of what Blocipedia truly offers!</p>
   <% if current_user.role == "standard" %>
     <%= link_to "Upgrade", new_charge_path, class: 'btn btn-success btn-lg' %>
   <% else %>
-    <%= link_to "Downgrade", downgrade_path, class: 'btn btn-danger btn-lg', data: {confirm: 'That\'s a terrible idea. Why do you want to leave us?!?!?!!!'} %>
+    <%= link_to "Downgrade", downgrade_path, class: 'btn btn-danger btn-lg', data: {confirm: 'If you downgrade, your private wikis will become public! Are you sure you would like to continue?'} %>
   <% end %>
 </div>
 
-<% @wiki.each do |wiki| %>
+<% @wikis.each do |wiki| %>
   <div class="media">
     <div class="media-body">
       <h4 class="media-heading">

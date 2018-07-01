@@ -2,7 +2,19 @@ class WikisController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @wiki = Wiki.all
+    if current_user == nil || current_user.role == 'member'
+      @wikis = Wiki.where(private: false)
+    else
+      if current_user.role == 'premium'
+        @wikis = Wiki.where('private=? OR user_id=?', false, current_user.id)
+      else
+        if current_user.role == 'admin'
+          @wikis = Wiki.all
+        else
+          @wikis = Wiki.where(private: false)
+        end
+      end
+    end 
   end
 
   def show

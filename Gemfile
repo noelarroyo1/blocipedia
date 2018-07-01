@@ -48,6 +48,8 @@ gem 'stripe'
 # Use figaro for environment vars
 gem 'figaro', '1.0'
 
+gem 'pry'
+
 group :development do
   gem 'listen', '~> 3.0.5'
   gem 'byebug'

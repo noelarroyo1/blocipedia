@@ -14,11 +14,4 @@ class User < ApplicationRecord
   has_many :wikis
 
   enum role: [:standard, :premium, :admin]
-
-  def downgrade
-    if self.role == "premium"
-      self.role = "standard"
-    end
-  end
-
 end
