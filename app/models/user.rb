@@ -14,4 +14,8 @@ class User < ApplicationRecord
   has_many :wikis
 
   enum role: [:standard, :premium, :admin]
+
+  def expose_wikis
+    self.wikis.update_all(private: false)
+  end
 end
