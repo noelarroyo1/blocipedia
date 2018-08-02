@@ -14,7 +14,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def edit?
-   user.present?
+    record.user == current_user || record.collaborating_users.include?(user)
   end
 
   def destroy?
@@ -22,30 +22,27 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def update?
-    if @wiki.private?
-      user.admin? or record.user.id == user.id
-    else
-      user
-    end
+    record.user == current_user || record.collaborating_users.include?(user)
   end
 
   def create?
     user.present?
   end
 
-  # class Scope < Scope
-  #   def resolve
-  #     if user.admin
-  #       return scope.all
-  #     else
-  #       a = []
-  #       scope.all.each do |w|
-  #         if w.user == user || !w.private
-  #           a << w
-  #         end
-  #       end
-  #     end
-  #     return a
-  #   end
-  # end
+class Scope
+  def resolve
+    wikis = []
+      if user.admin?
+        wikis = scope.all
+      else
+        all_wikis = scope.all
+        all_wikis.each do |wiki|
+          if wiki.private == false || wiki.collaborating_users.include?(user) || user == record.user
+            wikis << wiki
+          end
+        end
+      end
+     wikis
+    end
+  end
 end

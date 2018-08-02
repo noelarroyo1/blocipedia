@@ -50,8 +50,11 @@ gem 'figaro', '1.0'
 
 gem 'pry'
 
-# Use for markdown 
+# Use for markdown
 gem 'redcarpet'
+
+# Use for icons
+gem "font-awesome-rails"
 
 group :development do
   gem 'listen', '~> 3.0.5'

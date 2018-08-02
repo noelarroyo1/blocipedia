@@ -2,19 +2,7 @@ class WikisController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if current_user == nil || current_user.role == 'member'
-      @wikis = Wiki.where(private: false)
-    else
-      if current_user.role == 'premium'
-        @wikis = Wiki.where('private=? OR user_id=?', false, current_user.id)
-      else
-        if current_user.role == 'admin'
-          @wikis = Wiki.all
-        else
-          @wikis = Wiki.where(private: false)
-        end
-      end
-    end
+    @wikis = policy_scope(Wiki)
   end
 
   def show
@@ -27,6 +15,9 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    @collaborator = Collaborator.new
+    @collab_ids = @wiki.collaborators.map(&:user_id)
+    @noncollaborators = User.all.select{ |user| user != @wiki.user || !@collab_ids.include?(user.id) }
   end
 
   def destroy
@@ -72,18 +63,13 @@ private
     params.require(:wiki).permit(:title, :body, :private)
   end
 
-  def user
-    user = User.find(params[:id])
+  def owner
+    owner = @wiki.user
   end
 
   def authorize_user(wiki)
-    # unless current_user.admin?
-    #   flash[:alert] = "You must be an admin to do that."
-    #   redirect_to wikis_path
-    # end
-
-    if current_user != wiki.user || current_user != admin
-      flash[:alert] = "You must be an admin to do that."
+    if current_user != wiki.user || current_user != admin || current_user
+      flash[:alert] = "I am sorry but you do not have the permissions to do that."
       redirect_to wikis_path
     end
   end

@@ -16,5 +16,6 @@
         <%= f.check_box :private %> Private Wiki
       <% end %>
     </div>
+    <%= f.text_field 'wiki_id', value: @wiki.id, hidden: true %>
   <% end %>
 <% end %>

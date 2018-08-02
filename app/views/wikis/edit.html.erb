@@ -8,8 +8,16 @@
       <li>Don't post unintelligible subjects.</li>
       <li>The incessant use of stupid wikis will get you banned.</li>
     </ul>
+    <% @wiki.collaborators.each do |c| %>
+      <%= c.user.email %>
+      <%= link_to "x", wiki_collaborator_path(@wiki, c), :method => :delete %> <br />
+    <% end %>
   </div>
+
+
   <div class="col-md-8">
     <%= render partial: 'form', locals: { wiki: @wiki } %>
+    <br />
+    <%= render partial: 'collaborator', locals: { collaborator: @collaborator } %>
   </div>
 </div>
